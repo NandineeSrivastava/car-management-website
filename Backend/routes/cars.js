@@ -67,7 +67,7 @@ router.get("/all", async (req, res) => {
 });
 
 // Upload files
-router.post("/upload", upload.array("images", 10), async (req, res) => {
+router.post("/upload", authMiddleware, upload.array("images", 10), async (req, res) => {
   try {
     const imagePaths = req.files.map((file) =>
       path.relative("uploads", file.path)
@@ -115,7 +115,8 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-router.put("/update/:id", upload.array("images", 10), async (req, res) => {
+// Update car
+router.put("/update/:id", authMiddleware, upload.array("images", 10), async (req, res) => {
   try {
     const { id } = req.params;
     const { title, description, tags } = req.body;
@@ -147,7 +148,7 @@ router.put("/update/:id", upload.array("images", 10), async (req, res) => {
 });
 
 // Delete car
-router.delete("/delete/:id", async (req, res) => {
+router.delete("/delete/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
     const deletedCar = await Car.findByIdAndDelete(id);
