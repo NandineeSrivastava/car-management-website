@@ -65,6 +65,7 @@ function App() {
             }
           />
           <Route path="/searchresult" element={<SearchResult />} />
+          <Route path="/api/docs" element={<div></div>} />
         </Routes>
       </Router>
     </>
