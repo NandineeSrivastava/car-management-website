@@ -124,6 +124,9 @@ router.put("/update/:id", authMiddleware, upload.array("images", 10), async (req
       ? req.files.map((file) => `uploads/${file.filename}`)
       : [];
 
+    console.log("Request body:", req.body);
+    console.log("Uploaded files:", req.files);
+
     // Fetch the existing car data
     const existingCar = await Car.findById(id);
     if (!existingCar) {
@@ -133,7 +136,7 @@ router.put("/update/:id", authMiddleware, upload.array("images", 10), async (req
     // Update the specified fields
     existingCar.title = title || existingCar.title;
     existingCar.description = description || existingCar.description;
-    existingCar.tags = tags ? tags.split(",") : existingCar.tags;
+    existingCar.tags = typeof tags === 'string' ? tags.split(",") : existingCar.tags;
     if (imagePaths.length > 0) {
       existingCar.images = imagePaths;
     }
@@ -142,7 +145,7 @@ router.put("/update/:id", authMiddleware, upload.array("images", 10), async (req
     const updatedCar = await existingCar.save();
     res.status(200).json(updatedCar);
   } catch (err) {
-    console.error(err.message);
+    console.error("Error updating car:", err.message);
     res.status(500).json({ error: "Server error" });
   }
 });

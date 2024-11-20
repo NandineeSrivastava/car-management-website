@@ -90,11 +90,15 @@ const EditListing = () => {
     images.forEach((image) => formData.append("images", image));
 
     try {
+      const token = localStorage.getItem("token"); // Assuming the token is stored in localStorage
       const response = await fetch(
         `https://car-management-website-backend.onrender.com/cars/update/${id}`,
         {
           method: "PUT",
           body: formData,
+          headers: {
+            "Authorization": `Bearer ${token}`
+          }
         }
       );
       if (response.ok) {
