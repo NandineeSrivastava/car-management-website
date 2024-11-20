@@ -12,6 +12,14 @@ import "./App.css";
 import PrivateRoute from "./components/PrivateRoute";
 import SearchResult from "./components/SearchResult";
 
+function RedirectToDocs() {
+  useEffect(() => {
+    window.location.href = 'https://documenter.getpostman.com/view/39782037/2sAYBSiXxK';
+  }, []);
+
+  return null;
+}
+
 function App() {
   const [cars, setCars] = useState([]);
 
@@ -65,7 +73,7 @@ function App() {
             }
           />
           <Route path="/searchresult" element={<SearchResult />} />
-          <Route path="/api/docs" element={<div></div>} />
+          <Route path="/api/docs" element={<RedirectToDocs />} />
         </Routes>
       </Router>
     </>
